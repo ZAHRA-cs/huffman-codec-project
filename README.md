@@ -273,7 +273,7 @@ This project is licensed under the MIT License - see the [LICENSE](#) file for d
 
 **Badr** (Developer)
 - Collaborated with Zahra Barakat on this academic project
-- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
+- GitHub: [@ZAHRA_cs](https://github.com/ZAHRA_cs)
 
 ## 🙏 Acknowledgments
 
@@ -285,7 +285,6 @@ This project is licensed under the MIT License - see the [LICENSE](#) file for d
 
 For questions or feedback about this project:
 - Open an issue on GitHub
-- Email: [your-email@example.com]
 
 ---
 
