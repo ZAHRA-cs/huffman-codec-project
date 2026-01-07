@@ -12,7 +12,7 @@ A beautiful, fully-functional web application for file compression and decompres
 - **Student Name:** Zahra Barakat
 - **Student ID:** F23040129
 - **Institution:** Nanjing University of Posts and Telecommunications (NJUPT)
-- **Course:** Data Structures & Algorithms
+- **Course:** Specialized Course Design
 - **Project:** Huffman Coding Implementation
 
 ## ✨ Features
