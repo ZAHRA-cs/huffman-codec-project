@@ -1,0 +1,62 @@
+HUFFMAN CODING TEST FILE
+========================
+
+This is a sample text file designed to test the Huffman encoding and decoding algorithm.
+
+The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.
+This sentence contains every letter of the alphabet and is repeated to create patterns.
+
+REPEATED CHARACTERS FOR TESTING:
+aaaaaaaaaaaaaaaaaa
+bbbbbbbbbbbbbbbbbb
+cccccccccccccccccc
+
+NUMBERS:
+1234567890 1234567890 1234567890
+
+SPECIAL CHARACTERS:
+!@#$%^&*()_+-=[]{}|;':",./<>?
+
+MIXED CONTENT:
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet.
+The compression ratio depends on character frequency distribution.
+The compression ratio depends on character frequency distribution.
+
+UNICODE CHARACTERS (if supported):
+Hello World! 你好世界! مرحبا بالعالم!
+
+DATA FOR FREQUENCY ANALYSIS:
+The letter 'e' appears most frequently in English text.
+The letter 'e' appears most frequently in English text.
+The letter 'e' appears most frequently in English text.
+
+PROGRAMMING CODE SNIPPET:
+function huffmanEncode(text) {
+    const frequencies = calculateFrequencies(text);
+    const tree = buildHuffmanTree(frequencies);
+    const codes = generateCodes(tree);
+    return encodeText(text, codes);
+}
+
+MATHEMATICAL FORMULAS:
+E = mc²
+a² + b² = c²
+F = ma
+
+TIMESTAMP: 2024-12-31 23:59:59
+
+This file contains approximately 1500 characters and should compress well with Huffman coding
+due to the repeated patterns and common character distributions in English text.
+
+END OF TEST FILE
+================
+
+Additional notes:
+- The .bin file will look like garbage in text editors (THIS IS CORRECT!)
+- Use the decoder to verify successful compression
+- SHA-256 hash ensures data integrity
+- Compression ratio typically 40-60% for English text
+
+Student: Zahra Barakat
+ID: F23040129
+Project: Huffman Codec

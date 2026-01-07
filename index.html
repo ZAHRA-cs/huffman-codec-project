@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huffman Encoder/Decoder | Zahra Barakat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-gradient"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>HUFFMAN CODEC</span>
+                </div>
+                <div class="student-info">
+                    <span class="student-name">Zahra Barakat</span>
+                    <span class="student-id">F23040129</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="encode">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>COMPRESS</span>
+                </button>
+                <button class="tab-btn" data-tab="decode">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>DECOMPRESS</span>
+                </button>
+            </div>
+
+            <!-- ENCODE TAB -->
+            <div class="tab-content active" id="encode">
+                
+                <!-- Step 1: Upload Area (shows initially) -->
+                <div class="upload-container" id="encodeUploadContainer">
+                    <input type="file" id="encodeFileInput" accept=".txt" hidden>
+                    <div class="upload-dropzone" id="encodeDropzone">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="upload-icon">
+                            <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 2V9H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Drop your .txt file here</h3>
+                        <p>or click to browse</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: File Preview (shows after upload, before compression) -->
+                <div class="file-preview-container" id="encodePreviewContainer" style="display: none;">
+                    <div class="file-header">
+                        <div class="file-info">
+                            <span class="file-icon">📄</span>
+                            <div class="file-details">
+                                <div class="file-name" id="encodeFileName"></div>
+                                <div class="file-meta" id="encodeFileMeta"></div>
+                            </div>
+                        </div>
+                        <button class="btn-clear" id="encodeClearBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="file-content-box">
+                        <div class="content-label">FILE CONTENT</div>
+                        <pre id="encodeFileContent" class="scrollable-content"></pre>
+                    </div>
+                    <button class="btn-action" id="compressBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        COMPRESS FILE
+                    </button>
+                </div>
+
+                <!-- Step 3: Split View (shows after compression) -->
+                <div class="split-container" id="encodeSplitContainer" style="display: none;">
+                    <div class="split-panel">
+                        <div class="panel-header">
+                            <span>📄 ORIGINAL FILE</span>
+                            <span class="size-badge" id="encodeOriginalSize"></span>
+                        </div>
+                        <pre id="encodeOriginalContent" class="scrollable-content"></pre>
+                    </div>
+                    <div class="split-panel">
+                        <div class="panel-header">
+                            <span>📦 COMPRESSED (BINARY)</span>
+                            <span class="size-badge" id="encodeCompressedSize"></span>
+                        </div>
+                        <pre id="encodeBinaryContent" class="scrollable-content"></pre>
+                    </div>
+                </div>
+
+                <!-- Step 4: Results Section (shows after compression) -->
+                <div class="results-container" id="encodeResultsContainer" style="display: none;">
+                    <h2 class="section-title">Compression Statistics</h2>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-label">Original Size</div>
+                            <div class="stat-value" id="statOriginalSize">0 KB</div>
+                        </div>
+                        <div class="stat-card highlight">
+                            <div class="stat-label">Compressed Size</div>
+                            <div class="stat-value" id="statCompressedSize">0 KB</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Compression Ratio</div>
+                            <div class="stat-value" id="statCompressionRatio">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Space Saved</div>
+                            <div class="stat-value" id="statSpaceSaved">0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Unique Characters</div>
+                            <div class="stat-value" id="statUniqueChars">0</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Processing Time</div>
+                            <div class="stat-value" id="statProcessingTime">0 ms</div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-secondary" id="viewFreqBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Frequency Table
+                        </button>
+                        <button class="btn-secondary" id="viewCodesBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 18L22 12L16 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 6L2 12L8 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Huffman Codes
+                        </button>
+                        <button class="btn-secondary" id="viewChartBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M7 16L12 11L16 15L21 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Chart
+                        </button>
+                        <button class="btn-secondary" id="viewReportBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            Report
+                        </button>
+                    </div>
+
+                    <button class="btn-download" id="downloadCompressedBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        DOWNLOAD .BIN FILE
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- DECODE TAB -->
+            <div class="tab-content" id="decode">
+                
+                <!-- Step 1: Upload Area -->
+                <div class="upload-container" id="decodeUploadContainer">
+                    <input type="file" id="decodeFileInput" accept=".bin" hidden>
+                    <div class="upload-dropzone" id="decodeDropzone">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="upload-icon">
+                            <path d="M13 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V9L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M13 2V9H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h3>Drop your .bin file here</h3>
+                        <p>or click to browse</p>
+                    </div>
+                </div>
+
+                <!-- Step 2: File Preview -->
+                <div class="file-preview-container" id="decodePreviewContainer" style="display: none;">
+                    <div class="file-header">
+                        <div class="file-info">
+                            <span class="file-icon">📦</span>
+                            <div class="file-details">
+                                <div class="file-name" id="decodeFileName"></div>
+                                <div class="file-meta" id="decodeFileMeta"></div>
+                            </div>
+                        </div>
+                        <button class="btn-clear" id="decodeClearBtn">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="file-content-box">
+                        <div class="content-label">BINARY FILE (PURE BINARY)</div>
+                        <pre id="decodeFileContent" class="scrollable-content"></pre>
+                    </div>
+                    <button class="btn-action" id="decompressBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        DECOMPRESS FILE
+                    </button>
+                </div>
+
+                <!-- Step 3: Split View -->
+                <div class="split-container" id="decodeSplitContainer" style="display: none;">
+                    <div class="split-panel">
+                        <div class="panel-header">
+                            <span>📦 BINARY DATA</span>
+                            <span class="size-badge" id="decodeBinarySize"></span>
+                        </div>
+                        <div id="decodeMetadata" class="binary-only-content"></div>
+                    </div>
+                    <div class="split-panel">
+                        <div class="panel-header">
+                            <span>📄 DECOMPRESSED FILE</span>
+                            <span class="size-badge" id="decodeDecompressedSize"></span>
+                        </div>
+                        <pre id="decodeDecompressedContent" class="scrollable-content"></pre>
+                    </div>
+                </div>
+
+                <!-- Step 4: Results -->
+                <div class="results-container" id="decodeResultsContainer" style="display: none;">
+                    <button class="btn-download" id="downloadDecompressedBtn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M7 10L12 15L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        DOWNLOAD .TXT FILE
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" id="modalClose">×</button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Spinner -->
+    <div class="spinner" id="spinner" style="display: none;">
+        <div class="spinner-ring"></div>
+    </div>
+
+    <script src="huffman.js"></script>
+</body>
+</html>
