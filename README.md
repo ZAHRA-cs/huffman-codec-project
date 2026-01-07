@@ -273,7 +273,7 @@ This project is licensed under the MIT License - see the [LICENSE](#) file for d
 
 **Badr** (Developer)
 - Collaborated with Zahra Barakat on this academic project
-- GitHub: [@ZAHRA_cs](https://github.com/ZAHRA_cs)
+- GitHub: [@ZAHRA-cs](https://github.com/ZAHRA-cs)
 
 ## 🙏 Acknowledgments
 
